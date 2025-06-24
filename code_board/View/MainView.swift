@@ -7,12 +7,11 @@
 
 import UIKit
 
-class MainView: UIView {
-    let tempLabel: UILabel = {
-        var label = UILabel()
-        label.text = "메인화면"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+final class MainView: UIView {
+    let mainTableView: UITableView = {
+        let tv = UITableView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        return tv
     }()
     
     override init(frame: CGRect) {
@@ -26,10 +25,12 @@ class MainView: UIView {
     }
     
     func setupLayout() {
-        addSubview(tempLabel)
+        addSubview(mainTableView)
         NSLayoutConstraint.activate([
-            tempLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            tempLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            mainTableView.topAnchor.constraint(equalTo: topAnchor),
+            mainTableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            mainTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            mainTableView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }
