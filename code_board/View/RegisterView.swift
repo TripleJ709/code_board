@@ -80,6 +80,7 @@ final class RegisterView: UIView {
     let passwordConfirmMessage: UILabel = {
         var tv = UILabel()
         tv.text = ""
+        tv.font = UIFont.systemFont(ofSize: 15)
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
@@ -119,6 +120,7 @@ final class RegisterView: UIView {
     let registerBtn: UIButton = {
         var btn = UIButton()
         btn.setTitle("회원가입", for: .normal)
+        btn.backgroundColor = .green
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -126,13 +128,14 @@ final class RegisterView: UIView {
     let dismissBtn: UIButton = {
         var btn = UIButton()
         btn.setTitle("이전", for: .normal)
+        btn.backgroundColor = .green
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemGray4
+        backgroundColor = .white
         setupLayout()
     }
     
@@ -164,7 +167,7 @@ final class RegisterView: UIView {
             
             passwordConfirmMessage.leadingAnchor.constraint(equalTo: passwordConfirmTextField.leadingAnchor),
             passwordConfirmMessage.topAnchor.constraint(equalTo: passwordConfirmTextField.bottomAnchor, constant: 5),
-            passwordConfirmMessage.widthAnchor.constraint(equalToConstant: 50),
+            passwordConfirmMessage.widthAnchor.constraint(equalToConstant: 200),
             
             registerBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
             registerBtn.topAnchor.constraint(equalTo: passwordConfirmMessage.bottomAnchor, constant: 10),
