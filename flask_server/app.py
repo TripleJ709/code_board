@@ -90,6 +90,26 @@ def get_users():
         cursor.execute("SELECT id, name, email, created_at FROM users")
         users = cursor.fetchall()
     return jsonify(users)
+    
+# 전체 게시글 조회(가져오기)
+@app.route("/posts", methods=["GET"])
+def get_posts():
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT 
+                posts.id,
+                posts.title,
+                posts.content,
+                posts.user_id,
+                users.name,
+                posts.created_at,
+                posts.is_deleted
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            ORDER BY posts.created_at DESC
+        """)
+        posts = cursor.fetchall()
+    return jsonify(posts), 200
 
 
 # 서버 실행
