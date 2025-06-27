@@ -110,6 +110,34 @@ def get_posts():
         """)
         posts = cursor.fetchall()
     return jsonify(posts), 200
+    
+# 게시글 생성
+@app.route("/posts", methods=["POST"])
+def create_post():
+    data = request.get_json()
+
+    title = data.get("title")
+    content = data.get("content")
+    user_id = data.get("user_id")
+
+    # 필수값 확인
+    if not title or not content or not user_id:
+        return jsonify({"error": "title, content, user_id는 필수입니다."}), 400
+
+    try:
+        with conn.cursor() as cursor:
+            sql = """
+                INSERT INTO posts (title, content, user_id)
+                VALUES (%s, %s, %s)
+            """
+            cursor.execute(sql, (title, content, user_id))
+            conn.commit()
+
+        return jsonify({"message": "게시글이 등록되었습니다."}), 201
+
+    except Exception as e:
+        print("에러 발생:", e)
+        return jsonify({"error": "서버 에러"}), 500
 
 
 # 서버 실행
