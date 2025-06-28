@@ -7,17 +7,68 @@
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+final class PostTableViewCell: UITableViewCell {
+    
+    static let identifier = "PostCell"
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16)
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let authorLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var authorTimeStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [authorLabel, timeLabel])
+        sv.axis = .horizontal
+        sv.spacing = 10
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.alignment = .leading
+        return sv
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupLayout()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
+    func setupLayout() {
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(authorTimeStackView)
+        
+        authorLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        timeLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            
+            authorTimeStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            authorTimeStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            authorTimeStackView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            authorTimeStackView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor)
+        ])
+    }
 }

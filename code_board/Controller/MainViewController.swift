@@ -9,11 +9,14 @@ import UIKit
 
 class MainViewController: UIViewController, UITableViewDataSource {
     let mainView = MainView()
+    let postService = PostService()
+    var posts: [Post] = []
     
-    var posts: [Post] = [
-            Post(id: 1, title: "첫 글입니다", author: "Auser", date: "2025-06-23"),
-            Post(id: 2, title: "두 번째 글", author: "관리자", date: "2025-06-24"),
-        ]
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fetchData()
+    }
     
     override func loadView() {
         super.loadView()
@@ -24,9 +27,53 @@ class MainViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         mainView.mainTableView.delegate = self
         mainView.mainTableView.dataSource = self
-        mainView.mainTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        mainView.mainTableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostCell")
+        fetchData()
+        setupFloatingButton()
+    }
+    
+    func fetchData() {
+        postService.fetchPosts { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let posts):
+                    self?.posts = posts
+                    self?.mainView.mainTableView.reloadData()
+                case .failure(let error):
+                    print("데이터 불러오기 실패: ", error)
+                }
+            }
+        }
+    }
+    
+    func setupFloatingButton() {
+        let button: UIButton = {
+            let button = UIButton(type: .system)
+            button.setTitle("+", for: .normal)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 30)
+            button.tintColor = .white
+            button.backgroundColor = .blue
+            button.layer.cornerRadius = 30
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }()
+        
+        view.addSubview(button)
+        NSLayoutConstraint.activate([
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            button.widthAnchor.constraint(equalToConstant: 60),
+            button.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        button.addTarget(self, action: #selector(floatingBtnTapped), for: .touchUpInside)
     }
 
+    @objc func floatingBtnTapped() {
+        let createPostVC = CreatePostViewController()
+        createPostVC.modalPresentationStyle = .fullScreen
+        self.present(createPostVC, animated: true)
+    }
 }
 
 extension MainViewController: UITableViewDelegate {
@@ -35,9 +82,11 @@ extension MainViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as? PostTableViewCell else { return UITableViewCell()}
         let post = posts[indexPath.row]
-        cell.textLabel?.text = "\(post.title) - \(post.author)"
+        cell.titleLabel.text = post.title
+        cell.authorLabel.text = post.author
+        cell.timeLabel.text = post.formattedDate
         return cell
     }
 }

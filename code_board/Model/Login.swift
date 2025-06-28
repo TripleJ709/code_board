@@ -57,6 +57,11 @@ final class Login {
                    let email = userDict["email"] as? String {
                     let user = User(id: id, name: name, email: email)
                     completion(.success(user))
+                    
+                    let encoder = JSONEncoder()
+                    if let encoded = try? encoder.encode(user) {
+                        UserDefaults.standard.set(encoded, forKey: "currentUser")
+                    }
                 } else {
                     completion(.failure(NSError(domain: "Login failed", code: 401)))
                 }

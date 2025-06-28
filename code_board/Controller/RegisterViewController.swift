@@ -30,12 +30,12 @@ class RegisterViewController: UIViewController {
         let email = registerView.emailTextField.text ?? ""
         
         guard !email.isEmpty else {
-            showAlert(message: "이메일을 입력해주세요")
+            showAlert(title: "회원가입 실패", message: "이메일을 입력해주세요")
             return
         }
         
         if !isValidEmail(email) {
-            showAlert(message: "이메일 형식이 올바르지 않습니다.")
+            showAlert(title: "회원가입 실패", message: "이메일 형식이 올바르지 않습니다.")
             return
         }
         
@@ -51,7 +51,7 @@ class RegisterViewController: UIViewController {
                 case .failure(let error):
                     self.isEmailChecked = false
                     print("중복 확인 실패:", error)
-                    self.showAlert(message: "중복 확인 중 오류 발생")
+                    self.showAlert(title: "회원가입 실패", message: "중복 확인 중 오류 발생")
                 }
             }
         }
@@ -64,17 +64,17 @@ class RegisterViewController: UIViewController {
         let passwordConfirm = registerView.passwordConfirmTextField.text ?? ""
         
         if !isEmailChecked {
-            showAlert(message: "이메일 중복확인이 필요합니다.")
+            showAlert(title: "회원가입 실패", message: "이메일 중복확인이 필요합니다.")
             return
         }
         
         if !isValidPassword(password) {
-            showAlert(message: "비밀번호는 영문과 숫자를 포함한 8자리 이상이어야 합니다.")
+            showAlert(title: "회원가입 실패", message: "비밀번호는 영문과 숫자를 포함한 8자리 이상이어야 합니다.")
             return
         }
         
         if password != passwordConfirm {
-            showAlert(message: "비밀번호가 일치하지 않습니다.")
+            showAlert(title: "회원가입 실패", message: "비밀번호가 일치하지 않습니다.")
             return
         }
         
@@ -106,11 +106,11 @@ class RegisterViewController: UIViewController {
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: password)
     }
     
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "회원가입 실패", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
-        self.present(alert, animated: true)
-    }
+//    func showAlert(message: String) {
+//        let alert = UIAlertController(title: "회원가입 실패", message: message, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "확인", style: .default))
+//        self.present(alert, animated: true)
+//    }
 }
 
 extension RegisterViewController: UITextFieldDelegate {
