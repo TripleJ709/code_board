@@ -45,8 +45,8 @@ class CreatePostViewController: UIViewController {
                     switch result {
                     case .success(let message):
                         print("글 쓰기 성공: ", message)
-                        self.dismiss(animated: true)
-                        
+                        //self.dismiss(animated: true)
+                        self.navigationController?.popViewController(animated: true)
                     case .failure(let error):
                         print("글 쓰기 실패: ", error)
                     }
