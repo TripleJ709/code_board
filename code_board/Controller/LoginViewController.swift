@@ -32,8 +32,9 @@ final class LoginViewController: UIViewController {
                 case .success(let user):
                     print("로그인 성공", user)
                     let mainVC = MainViewController()
-                    mainVC.modalPresentationStyle = .fullScreen
-                    self.present(mainVC, animated: true)
+                    let navVC = UINavigationController(rootViewController: mainVC)
+                    navVC.modalPresentationStyle = .fullScreen
+                    self.present(navVC, animated: true)
                 case .failure(let error):
                     print("로그인 실패", error)
                     let alert = UIAlertController(title: "로그인 실패", message: "아이디 또는 비밀번호가 올바르지 않습니다.", preferredStyle: .alert)

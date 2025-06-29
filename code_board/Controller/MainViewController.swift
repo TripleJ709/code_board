@@ -25,6 +25,7 @@ class MainViewController: UIViewController, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "게시판"
         mainView.mainTableView.delegate = self
         mainView.mainTableView.dataSource = self
         mainView.mainTableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostCell")
