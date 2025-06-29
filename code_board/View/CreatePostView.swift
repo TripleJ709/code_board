@@ -9,13 +9,13 @@ import UIKit
 
 class CreatePostView: UIView {
     
-    let mainLabel: UILabel = {
-        let label = UILabel ()
-        label.text = "글쓰기"
-        label.font = .systemFont(ofSize: 30)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+//    let mainLabel: UILabel = {
+//        let label = UILabel ()
+//        label.text = "글쓰기"
+//        label.font = .systemFont(ofSize: 30)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
     let titleTextField:UITextField = {
         let tf = UITextField()
@@ -55,16 +55,16 @@ class CreatePostView: UIView {
     }
     
     func setupLayout() {
-        addSubview(mainLabel)
+//        addSubview(mainLabel)
         addSubview(titleTextField)
         addSubview(contentTextView)
         addSubview(createPostButton)
         
         NSLayoutConstraint.activate([
-            mainLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            mainLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 15),
-            
-            titleTextField.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 30),
+//            mainLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+//            mainLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 15),
+//            
+            titleTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
             titleTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             titleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             

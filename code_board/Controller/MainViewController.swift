@@ -72,8 +72,9 @@ class MainViewController: UIViewController, UITableViewDataSource {
 
     @objc func floatingBtnTapped() {
         let createPostVC = CreatePostViewController()
-        createPostVC.modalPresentationStyle = .fullScreen
-        self.present(createPostVC, animated: true)
+        navigationController?.pushViewController(createPostVC, animated: true)
+//        createPostVC.modalPresentationStyle = .fullScreen
+//        self.present(createPostVC, animated: true)
     }
 }
 

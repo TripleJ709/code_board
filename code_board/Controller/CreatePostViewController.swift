@@ -20,7 +20,7 @@ class CreatePostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "글쓰기"
         createPostView.createPostButton.addTarget(self, action: #selector(createPostBtnTapped), for: .touchUpInside)
     }
 
