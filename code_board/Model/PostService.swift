@@ -8,6 +8,8 @@
 import Foundation
 
 final class PostService {
+    
+    //전체 게시글 가져오기(조회)
     func fetchPosts(completion: @escaping (Result<[Post], Error>) -> Void) {
         guard let url = URL(string: "http://127.0.0.1:5000/posts") else { return }
         
@@ -31,6 +33,7 @@ final class PostService {
         }.resume()
     }
     
+    //게시글 생성
     func createPost(request: PostCreateRequest, completion: @escaping (Result<String, Error>) -> Void) {
         guard let url = URL(string: "http://127.0.0.1:5000/posts") else { return }
         
@@ -61,6 +64,30 @@ final class PostService {
                 completion(.success(message))
             } else {
                 completion(.failure(NSError(domain: "InvaildResponse", code: 0)))
+            }
+        }.resume()
+    }
+    
+    //게시글 상세 조회
+    func PostDetail(id: Int, completion: @escaping (Result<Post, Error>) -> Void) {
+        guard let url = URL(string: "http://127.0.0.1:5000/posts/\(id)") else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data else {
+                completion(.failure(NSError(domain: "NoData", code: 0)))
+                return
+            }
+            
+            do {
+                let post = try JSONDecoder().decode(Post.self, from: data)
+                completion(.success(post))
+            } catch {
+                completion(.failure(error))
             }
         }.resume()
     }

@@ -37,21 +37,6 @@ struct Post: Codable {
     }
     
     var formattedDate: String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-        inputFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        outputFormatter.locale = Locale(identifier: "ko_KR")
-        outputFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        
-        if let date = inputFormatter.date(from: createdAt) {
-            return outputFormatter.string(from: date)
-        } else {
-            print("날짜 파싱 실패: \(createdAt)")
-            return createdAt
-        }
+        DateFormatter.convert(createdAt, from: "EEE, dd MMM yyyy HH:mm:ss zzz", to: "yyyy년 M월 d일 HH:mm")
     }
 }

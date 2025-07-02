@@ -120,7 +120,6 @@ def create_post():
     content = data.get("content")
     user_id = data.get("user_id")
 
-    # 필수값 확인
     if not title or not content or not user_id:
         return jsonify({"error": "title, content, user_id는 필수입니다."}), 400
 
@@ -139,6 +138,30 @@ def create_post():
         print("에러 발생:", e)
         return jsonify({"error": "서버 에러"}), 500
 
+# 게시글 상세 조회
+@app.route("/posts/<int:post_id>", methods=["GET"])
+def get_post(post_id):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT 
+                posts.id,
+                posts.title,
+                posts.content,
+                posts.user_id,
+                users.name,
+                posts.created_at,
+                posts.is_deleted
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            WHERE posts.id = %s
+        """, (post_id,))
+        
+        post = cursor.fetchone()
+        
+        if post:
+            return jsonify(post), 200
+        else:
+            return jsonify({"error": "게시글을 찾을 수 없습니다."}), 404
 
 # 서버 실행
 if __name__ == "__main__":

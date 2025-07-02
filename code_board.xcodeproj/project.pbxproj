@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8927F6422E12885200295407 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8927F6412E12885200295407 /* PostDetailView.swift */; };
+		8927F6442E129F3300295407 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8927F6432E129F3300295407 /* PostDetailViewController.swift */; };
+		8927F6462E14F15D00295407 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8927F6452E14F15100295407 /* DateFormatter.swift */; };
 		89284E5A2E06BD2900F5863D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89284E512E06BD2900F5863D /* Assets.xcassets */; };
 		89284E5C2E06BD2900F5863D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89284E542E06BD2900F5863D /* LaunchScreen.storyboard */; };
 		89284E5E2E06BD2900F5863D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89284E502E06BD2900F5863D /* AppDelegate.swift */; };
@@ -29,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8927F6412E12885200295407 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		8927F6432E129F3300295407 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
+		8927F6452E14F15100295407 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		89284E382E06BD0700F5863D /* code_board.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = code_board.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89284E502E06BD2900F5863D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		89284E512E06BD2900F5863D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,6 +110,7 @@
 				8950F0802E09ECDC0048A523 /* MainView.swift */,
 				8930FA772E0DCAD4007DD563 /* PostTableViewCell.swift */,
 				8930FA7B2E0E7170007DD563 /* CreatePostView.swift */,
+				8927F6412E12885200295407 /* PostDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -115,6 +122,7 @@
 				8950F07E2E0966160048A523 /* RegisterViewController.swift */,
 				8950F0822E09EDC40048A523 /* MainViewController.swift */,
 				8930FA7F2E0FF117007DD563 /* CreatePostViewController.swift */,
+				8927F6432E129F3300295407 /* PostDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -133,6 +141,7 @@
 		8930FA842E0FF527007DD563 /* Extention */ = {
 			isa = PBXGroup;
 			children = (
+				8927F6452E14F15100295407 /* DateFormatter.swift */,
 				8930FA812E0FF3B8007DD563 /* UIViewConroller.swift */,
 			);
 			path = Extention;
@@ -217,6 +226,7 @@
 				8930FA802E0FF117007DD563 /* CreatePostViewController.swift in Sources */,
 				89284E6C2E093BD200F5863D /* LoginView.swift in Sources */,
 				8950F07B2E09571B0048A523 /* Register.swift in Sources */,
+				8927F6462E14F15D00295407 /* DateFormatter.swift in Sources */,
 				89284E682E0937F500F5863D /* LoginViewController.swift in Sources */,
 				8950F07F2E0966160048A523 /* RegisterViewController.swift in Sources */,
 				8950F07D2E095B960048A523 /* RegisterView.swift in Sources */,
@@ -225,7 +235,9 @@
 				8950F0832E09EDC40048A523 /* MainViewController.swift in Sources */,
 				89284E5E2E06BD2900F5863D /* AppDelegate.swift in Sources */,
 				8930FA7A2E0DCD58007DD563 /* PostService.swift in Sources */,
+				8927F6442E129F3300295407 /* PostDetailViewController.swift in Sources */,
 				89284E5F2E06BD2900F5863D /* SceneDelegate.swift in Sources */,
+				8927F6422E12885200295407 /* PostDetailView.swift in Sources */,
 				8930FA822E0FF3CB007DD563 /* UIViewConroller.swift in Sources */,
 				8930FA782E0DCAD4007DD563 /* PostTableViewCell.swift in Sources */,
 			);

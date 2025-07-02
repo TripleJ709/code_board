@@ -91,4 +91,15 @@ extension MainViewController: UITableViewDelegate {
         cell.timeLabel.text = post.formattedDate
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        
+        let detailVC = PostDetailViewController()
+        detailVC.post = post
+        
+        navigationController?.pushViewController(detailVC, animated: true)
+        
+        tableView.deselectRow(at: indexPath, animated: true) // 선택했을 때 효과 제거
+    }
 }
