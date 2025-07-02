@@ -24,6 +24,7 @@ class PostDetailView: UIView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "제목"
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -40,8 +41,16 @@ class PostDetailView: UIView {
     let contentLabel: UILabel = {
         let label = UILabel()
         label.text = "내용"
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let hr: UIView = {
+        let v = UIView()
+        v.backgroundColor = .systemGray4
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
     }()
     
     override init(frame: CGRect) {
@@ -61,6 +70,8 @@ class PostDetailView: UIView {
         containerView.addSubview(titleLabel)
         containerView.addSubview(authorDateLabel)
         containerView.addSubview(contentLabel)
+        
+        containerView.addSubview(hr)
         
         NSLayoutConstraint.activate([
             detailScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -84,7 +95,13 @@ class PostDetailView: UIView {
             contentLabel.topAnchor.constraint(equalTo: authorDateLabel.bottomAnchor, constant:  20),
             contentLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             contentLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            contentLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
+            
+            hr.heightAnchor.constraint(equalToConstant: 1),
+            hr.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
+            hr.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
+            hr.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            hr.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 20),
+            hr.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
             
         ])
     }
