@@ -106,6 +106,7 @@ def get_posts():
                 posts.is_deleted
             FROM posts
             JOIN users ON posts.user_id = users.id
+            WHERE posts.is_deleted = 0
             ORDER BY posts.created_at DESC
         """)
         posts = cursor.fetchall()

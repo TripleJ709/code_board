@@ -9,6 +9,7 @@ import UIKit
 
 class PostDetailViewController: UIViewController {
     
+    let postService = PostService()
     let detailView = PostDetailView()
     var post: Post?
     
@@ -53,14 +54,34 @@ class PostDetailViewController: UIViewController {
     }
     
     @objc func deletePost() {
-        
+        guard let post else { return }
+        guard let data = UserDefaults.standard.data(forKey: "currentUser"),
+              let currentUser = try? JSONDecoder().decode(User.self, from: data) else {
+            showAlert(title: "오류", message: "로그인 정보를 불러올 수 없습니다.")
+            return
+        }
+        let alert = UIAlertController(title: "삭제 확인", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+            self.postService.deletePost(postID: post.id, userID: currentUser.id) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let msg):
+                        print("삭제 성공: ", msg)
+                        self.navigationController?.popViewController(animated: true)
+                    case .failure(let err):
+                        print("삭제 실패: ", err)
+                        self.showAlert(title: "삭제 실패", message: "글 삭제에 실패했습니다.")
+                    }
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(alert, animated: true)
     }
 }
 
 extension PostDetailViewController: PostUpdateDelegate {
     func didUpdatePost() {
-        let postService = PostService()
-        
         guard let post else { return }
         
         postService.PostDetail(id: post.id) { result in
