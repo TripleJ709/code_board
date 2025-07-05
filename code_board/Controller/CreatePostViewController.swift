@@ -38,7 +38,7 @@ class CreatePostViewController: UIViewController {
             print("생성 if let 실행됨")
             let userId = user.id
             
-            let reqeust = PostCreateRequest(title: title, content: content, userID: userId)
+            let reqeust = PostRequest(title: title, content: content, userID: userId)
             
             postService.createPost(request: reqeust) { result in
                 DispatchQueue.main.async {

@@ -162,6 +162,51 @@ def get_post(post_id):
             return jsonify(post), 200
         else:
             return jsonify({"error": "게시글을 찾을 수 없습니다."}), 404
+            
+# 게시글 수정
+@app.route("/posts/<int:post_id>", methods=["PUT"])
+def update_post(post_id):
+    data = request.get_json()
+    title = data.get("title")
+    content = data.get("content")
+    user_id = data.get("user_id")
+
+    if not title or not content or not user_id:
+        return jsonify({"error": "title, content, user_id는 필수입니다."}), 400
+
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE id = %s AND user_id = %s", (post_id, user_id))
+        post = cursor.fetchone()
+        if not post:
+            return jsonify({"error": "권한이 없거나 게시글이 존재하지 않습니다."}), 403
+
+        cursor.execute(
+            "UPDATE posts SET title = %s, content = %s WHERE id = %s",
+            (title, content, post_id)
+        )
+        conn.commit()
+
+    return jsonify({"message": "게시글이 수정되었습니다."}), 200
+    
+#게시글 삭제
+@app.route("/posts/<int:post_id>", methods=["DELETE"])
+def delete_post(post_id):
+    data = request.get_json()
+    user_id = data.get("user_id")
+
+    if not user_id:
+        return jsonify({"error": "user_id는 필수입니다."}), 400
+
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT * FROM posts WHERE id = %s AND user_id = %s", (post_id, user_id))
+        post = cursor.fetchone()
+        if not post:
+            return jsonify({"error": "권한이 없거나 게시글이 존재하지 않습니다."}), 403
+
+        cursor.execute("UPDATE posts SET is_deleted = 1 WHERE id = %s", (post_id,))
+        conn.commit()
+
+    return jsonify({"message": "게시글이 삭제되었습니다."}), 200
 
 # 서버 실행
 if __name__ == "__main__":

@@ -34,7 +34,7 @@ final class PostService {
     }
     
     //게시글 생성
-    func createPost(request: PostCreateRequest, completion: @escaping (Result<String, Error>) -> Void) {
+    func createPost(request: PostRequest, completion: @escaping (Result<String, Error>) -> Void) {
         guard let url = URL(string: "http://127.0.0.1:5000/posts") else { return }
         
         var urlRequest = URLRequest(url: url)
@@ -88,6 +88,41 @@ final class PostService {
                 completion(.success(post))
             } catch {
                 completion(.failure(error))
+            }
+        }.resume()
+    }
+    
+    //게시글 수정
+    func updatePost(postID: Int, request: PostRequest, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let url = URL(string: "http://127.0.0.1:5000/posts/\(postID)") else { return }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "PUT"
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let jsonData = try JSONEncoder().encode(request)
+            urlRequest.httpBody = jsonData
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            if let error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data else {
+                completion(.failure(NSError(domain: "No Data", code: 0)))
+                return
+            }
+            
+            if let message = String(data: data, encoding: .utf8) {
+                completion(.success(message))
+            } else {
+                completion(.failure(NSError(domain: "Invalid response", code: 0)))
             }
         }.resume()
     }

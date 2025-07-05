@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PostCreateRequest: Codable {
+struct PostRequest: Codable {
     let title: String
     let content: String
     let userID: Int
