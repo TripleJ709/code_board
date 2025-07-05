@@ -47,12 +47,34 @@ class PostDetailViewController: UIViewController {
     @objc func editPost() {
         guard let post else { return }
         let request = PostRequest(title: post.title, content: post.content, userID: post.userID)
-        
         let updateVC = PostUpdateViewController(postID: post.id, postReqeust: request)
+        updateVC.delegate = self
         navigationController?.pushViewController(updateVC, animated: true)
     }
     
     @objc func deletePost() {
         
+    }
+}
+
+extension PostDetailViewController: PostUpdateDelegate {
+    func didUpdatePost() {
+        let postService = PostService()
+        
+        guard let post else { return }
+        
+        postService.PostDetail(id: post.id) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let updatedPost):
+                    self.post = updatedPost
+                    self.detailView.titleLabel.text = updatedPost.title
+                    self.detailView.authorDateLabel.text = "작성자: \(updatedPost.author)  \(self.formatterDate(updatedPost.createdAt))"
+                    self.detailView.contentLabel.text = updatedPost.content
+                case .failure(let error):
+                    print("게시글 다시 불러오기 실패:", error)
+                }
+            }
+        }
     }
 }

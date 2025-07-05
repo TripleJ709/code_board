@@ -8,6 +8,7 @@
 import UIKit
 
 class PostUpdateViewController: UIViewController {
+    weak var delegate: PostUpdateDelegate?
     
     let postService = PostService()
     let createPostView = CreatePostView()
@@ -61,10 +62,11 @@ class PostUpdateViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let msg):
-                    print("수정 성공")
+                    self.delegate?.didUpdatePost()
+                    print("수정 성공: ", msg)
                     self.navigationController?.popViewController(animated: true)
                 case .failure(let err):
-                    print("수정 실패")
+                    print("수정 실패: ", err)
                     self.showAlert(title: "오류", message: "글 수정에 실패했습니다.")
                 }
             }
