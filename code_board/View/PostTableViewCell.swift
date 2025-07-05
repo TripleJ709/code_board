@@ -7,9 +7,8 @@
 
 import UIKit
 
+// identifier -> PostCell(MainView.swift)
 final class PostTableViewCell: UITableViewCell {
-    
-    static let identifier = "PostCell"
     
     let titleLabel: UILabel = {
         let label = UILabel()
