@@ -53,6 +53,37 @@ class PostDetailView: UIView {
         return v
     }()
     
+    let commentTableView: UITableView = {
+        let tv = UITableView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.isScrollEnabled = false
+        tv.separatorStyle = .none
+        return tv
+    }()
+    
+    let commentTextField: UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "댓글을 입력하세요."
+        tf.borderStyle = .roundedRect
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
+    }()
+    
+    let commentButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("등록", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    lazy var commentStackView: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [commentTextField, commentButton])
+        sv.axis = .horizontal
+        sv.spacing = 0
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -72,6 +103,9 @@ class PostDetailView: UIView {
         containerView.addSubview(contentLabel)
         
         containerView.addSubview(hr)
+        
+        containerView.addSubview(commentTableView)
+        containerView.addSubview(commentStackView)
         
         NSLayoutConstraint.activate([
             detailScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -101,7 +135,16 @@ class PostDetailView: UIView {
             hr.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
             hr.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             hr.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 20),
-            hr.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
+            // hr.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
+            
+            commentTableView.topAnchor.constraint(equalTo: hr.bottomAnchor, constant: 20),
+            commentTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            commentTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            
+            commentStackView.topAnchor.constraint(equalTo: commentTableView.bottomAnchor, constant: 10),
+            commentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            commentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            commentStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
             
         ])
     }

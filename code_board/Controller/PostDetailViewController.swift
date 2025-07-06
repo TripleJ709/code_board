@@ -13,6 +13,11 @@ class PostDetailViewController: UIViewController {
     let detailView = PostDetailView()
     var post: Post?
     
+    var comments: [Comment] = [Comment(id: 1, postID: 20, userID: 2, author: "Alice", content: "좋은 글이네요!", createdAt: "2025-07-05 12:00:00"),
+                              Comment(id: 2, postID: 1, userID: 3, author: "Bob", content: "많은 도움이 되었습니다 감사합니다.", createdAt: "2025-07-05 13:45:00"),
+                              Comment(id: 3, postID: 1, userID: 4, author: "Charlie", content: "질문이 있는데 댓글로 남깁니다!", createdAt: "2025-07-05 14:15:00")
+    ]
+    
     override func loadView() {
         super.loadView()
         view = detailView
@@ -20,6 +25,10 @@ class PostDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        detailView.commentTableView.delegate = self
+        detailView.commentTableView.dataSource = self
+        detailView.commentTableView.register(CommentTableViewCell.self, forCellReuseIdentifier: "CommentCell")
         
         let postAuthorID = post?.userID
         
@@ -98,4 +107,23 @@ extension PostDetailViewController: PostUpdateDelegate {
             }
         }
     }
+}
+
+extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        comments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentTableViewCell else {
+            return UITableViewCell()
+        }
+        let comment = comments[indexPath.row]
+        cell.authorLabel.text = comment.author
+        cell.dateLabel.text = comment.createdAt
+        cell.contentLabel.text = comment.content
+        return cell
+    }
+    
+    
 }
