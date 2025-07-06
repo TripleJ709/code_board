@@ -73,6 +73,7 @@ class PostDetailView: UIView {
         let button = UIButton()
         button.setTitle("등록", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .green
         return button
     }()
     
@@ -140,11 +141,14 @@ class PostDetailView: UIView {
             commentTableView.topAnchor.constraint(equalTo: hr.bottomAnchor, constant: 20),
             commentTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             commentTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            commentTableView.heightAnchor.constraint(equalToConstant: CGFloat(240)),
             
             commentStackView.topAnchor.constraint(equalTo: commentTableView.bottomAnchor, constant: 10),
-            commentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            commentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            commentStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)
+            commentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
+            commentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
+            commentStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
+            
+            commentButton.widthAnchor.constraint(equalToConstant: 100)
             
         ])
     }
