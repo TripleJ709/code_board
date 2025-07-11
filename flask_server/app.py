@@ -189,7 +189,7 @@ def update_post(post_id):
 
     return jsonify({"message": "게시글이 수정되었습니다."}), 200
     
-#게시글 삭제
+# 게시글 삭제
 @app.route("/posts/<int:post_id>", methods=["DELETE"])
 def delete_post(post_id):
     data = request.get_json()
@@ -208,6 +208,20 @@ def delete_post(post_id):
         conn.commit()
 
     return jsonify({"message": "게시글이 삭제되었습니다."}), 200
+    
+# 게시글의 댓글 조회
+@app.route("/posts/<int:post_id>/comments", methods=["GET"])
+def get_comments(post_id):
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            SELECT comments.id, comments.post_id, comments.user_id, users.name, comments.content, comments.created_at
+            FROM comments
+            JOIN users ON comments.user_id = users.id
+            WHERE comments.post_id = %s
+            ORDER BY comments.created_at ASC
+        """, (post_id,))
+        comments = cursor.fetchall()
+    return jsonify(comments), 200
 
 # 서버 실행
 if __name__ == "__main__":

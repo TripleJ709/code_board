@@ -19,6 +19,7 @@ class CommentTableViewCell: UITableViewCell {
     let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "작성 시간"
+        label.font = .systemFont(ofSize: 10)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -26,6 +27,7 @@ class CommentTableViewCell: UITableViewCell {
     let contentLabel: UILabel = {
         let label = UILabel()
         label.text = "내용"
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

@@ -17,7 +17,7 @@ class CreatePostView: UIView {
 //        return label
 //    }()
     
-    let titleTextField:UITextField = {
+    let titleTextField: UITextField = {
         let tf = UITextField()
         tf.borderStyle = .roundedRect
         tf.placeholder = "제목"

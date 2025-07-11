@@ -12,11 +12,9 @@ class PostDetailViewController: UIViewController {
     let postService = PostService()
     let detailView = PostDetailView()
     var post: Post?
+    let commentService = CommentService()
     
-    var comments: [Comment] = [Comment(id: 1, postID: 20, userID: 2, author: "Alice", content: "좋은 글이네요!", createdAt: "2025-07-05 12:00:00"),
-                              Comment(id: 2, postID: 1, userID: 3, author: "Bob", content: "많은 도움이 되었습니다 감사합니다.", createdAt: "2025-07-05 13:45:00"),
-                              Comment(id: 3, postID: 1, userID: 4, author: "Charlie", content: "질문이 있는데 댓글로 남깁니다!", createdAt: "2025-07-05 14:15:00")
-    ]
+    var comments: [Comment] = []
     
     override func loadView() {
         super.loadView()
@@ -47,6 +45,21 @@ class PostDetailViewController: UIViewController {
             detailView.titleLabel.text = post.title
             detailView.authorDateLabel.text = "작성자: \(post.author)  \(formatterDate(post.createdAt))"
             detailView.contentLabel.text = post.content
+            
+            commentService.fetchComment(for: post.id) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let comments):
+                        self.comments = comments
+                        self.detailView.commentTableView.reloadData()
+                        self.detailView.commentTableView.layoutIfNeeded()
+                        self.detailView.commentTableViewHeightConstraint?.constant = self.detailView.commentTableView.contentSize.height + 44
+                        print("댓글 불러오기 성공: ", comments)
+                    case .failure(let error):
+                        print("댓글 불러오기 실패: ", error)
+                    }
+                }
+            }
         }
     }
     
@@ -120,8 +133,9 @@ extension PostDetailViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let comment = comments[indexPath.row]
         cell.authorLabel.text = comment.author
-        cell.dateLabel.text = comment.createdAt
+        cell.dateLabel.text = formatterDate(comment.createdAt)
         cell.contentLabel.text = comment.content
+        cell.selectionStyle = .none
         return cell
     }
     

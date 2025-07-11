@@ -9,6 +9,8 @@ import UIKit
 
 class PostDetailView: UIView {
     
+    var commentTableViewHeightConstraint: NSLayoutConstraint?
+    
     let detailScrollView: UIScrollView = {
         let sv = UIScrollView()
         sv.translatesAutoresizingMaskIntoConstraints = false
@@ -108,6 +110,9 @@ class PostDetailView: UIView {
         containerView.addSubview(commentTableView)
         containerView.addSubview(commentStackView)
         
+        commentTableViewHeightConstraint = commentTableView.heightAnchor.constraint(equalToConstant: 0)
+        commentTableViewHeightConstraint?.isActive = true
+        
         NSLayoutConstraint.activate([
             detailScrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             detailScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -141,7 +146,7 @@ class PostDetailView: UIView {
             commentTableView.topAnchor.constraint(equalTo: hr.bottomAnchor, constant: 20),
             commentTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             commentTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            commentTableView.heightAnchor.constraint(equalToConstant: CGFloat(240)),
+            // commentTableView.heightAnchor.constraint(equalToConstant: CGFloat(240)),
             
             commentStackView.topAnchor.constraint(equalTo: commentTableView.bottomAnchor, constant: 10),
             commentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
